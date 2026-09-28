@@ -14,6 +14,7 @@ clean_build_files() {
 
 #-------------------
 # Clone Cecil
+# https://github.com/jbevain/cecil/tags
 if [ ! -d "$DEPS_PATH/cecil" ]; then
     echo "📦 Cloning Cecil..."
     git -C "$DEPS_PATH" clone https://github.com/jbevain/cecil.git
@@ -25,6 +26,7 @@ else
 fi
 
 # Clone MonoMod
+# https://github.com/MonoMod/MonoMod/tags
 if [ ! -d "$DEPS_PATH/MonoMod" ]; then
     echo "📦 Cloning MonoMod..."
     git -C "$DEPS_PATH" clone https://github.com/MonoMod/MonoMod.git
@@ -37,6 +39,7 @@ else
 fi
 
 # Clone HarmonyX
+# https://github.com/BepInEx/HarmonyX/tags
 if [ ! -d "$DEPS_PATH/HarmonyX" ]; then
     echo "📦 Cloning HarmonyX..."
     git -C "$DEPS_PATH" clone https://github.com/BepInEx/HarmonyX.git
@@ -48,6 +51,7 @@ else
 fi
 
 # Clone BepInEx v5 (LTS, the one Valheim use)
+# https://github.com/AzumattDev/BepInEx
 if [ ! -d "$DEPS_PATH/BepInEx" ]; then
     echo "📦 Cloning BepInEx..."
     # Vi klonar specifikt v5-lts branch och drar med HarmonyX, MonoMod osv automatiskt via --recursive
@@ -61,6 +65,7 @@ else
 fi
 
 # Clone BepInEx.Analyzers
+# https://github.com/BepInEx/BepInEx.Analyzers/tags
 if [ ! -d "$DEPS_PATH/BepInEx.Analyzers" ]; then
     git -C "$DEPS_PATH" clone https://github.com/BepInEx/BepInEx.Analyzers.git
     (cd $DEPS_PATH/BepInEx.Analyzers && \
@@ -71,6 +76,7 @@ else
 fi
 
 # Clone BepInEx.ConfigurationManager
+# https://github.com/BepInEx/BepInEx.ConfigurationManager/tags
 if [ ! -d "$DEPS_PATH/BepInEx.ConfigurationManager" ]; then
     git -C "$DEPS_PATH" clone https://github.com/BepInEx/BepInEx.ConfigurationManager.git
     (cd $DEPS_PATH/BepInEx.ConfigurationManager && \
@@ -81,17 +87,19 @@ else
 fi
 
 # Clone Jotunn
+# https://github.com/Valheim-Modding/Jotunn/tags
 if [ ! -d "$DEPS_PATH/Jotunn" ]; then
     echo "📦 Cloning Jotunn..."
     git -C "$DEPS_PATH" clone https://github.com/Valheim-Modding/Jotunn.git
     (cd $DEPS_PATH/Jotunn && \
-    git checkout 2d4d875ce16c21ad8c99e99864d42e2c4821886b) # v2.30.1
+    git checkout 5d5043db1e2bce00172aa79cba378b4524012081) # v2.30.2
     clean_build_files "$DEPS_PATH/Jotunn"
 else
     echo "✅ Jotunn already installed."
 fi
 
 # Clone UnityDoorstop v4.5.0 for Windows/Valheim
+# https://github.com/NeighTools/UnityDoorstop/tags
 if [ ! -d "$DEPS_PATH/UnityDoorstop" ]; then
     echo "📦 Cloning UnityDoorstop..."
     git -C "$DEPS_PATH" clone https://github.com/NeighTools/UnityDoorstop.git

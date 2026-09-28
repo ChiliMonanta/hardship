@@ -262,7 +262,7 @@ dotnet pack "$CONFIGURATION_MANAGER_WRAPPER_PATH/ConfigurationManager.csproj" \
 #-------------------
 echo "# Build Jotunn"
 JONTUNN_PATH="$DEPS_PATH/Jotunn"
-JOTUNN_VERSION=2.30.1
+JOTUNN_VERSION=2.30.2
 
 clean_build_files "$JONTUNN_PATH"
 
