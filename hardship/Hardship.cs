@@ -152,7 +152,7 @@ public class Hardship : BaseUnityPlugin
         cryptSurtlingCoreChance = Config.Bind(
             "Crypt Loot",
             "SurtlingCoreChance",
-            30f,
+            50f,
             new ConfigDescription(
                 "Percent chance (0-100) to find a Surtling Core in a Burial Chamber (0 or 1 total per crypt).",
                 new AcceptableValueRange<float>(0f, 100f),
@@ -905,7 +905,9 @@ public class Hardship : BaseUnityPlugin
     [HarmonyPatch]
     public static class CryptLootPatch
     {
+        private const string ProcessedCoreStandZdoKey = "Hardship_CryptCoreProcessed";
         private static bool wasInsideCrypt;
+        private static readonly HashSet<int> processedStandInstanceIds = new();
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Player), "FixedUpdate")]
@@ -939,22 +941,60 @@ public class Hardship : BaseUnityPlugin
             }
 
             var playerPos = Player.m_localPlayer.transform.position;
+            var playerRoom = UnityEngine.Object.FindObjectsByType<Room>(FindObjectsSortMode.None)
+                .Where(room => room.gameObject.scene.IsValid() && IsPositionInsideRoom(room, playerPos))
+                .OrderBy(room => (room.transform.position - playerPos).sqrMagnitude)
+                .FirstOrDefault();
 
-            // Target placed Surtling Core stands within the local dungeon area (80m radius)
+            var dungeon = playerRoom != null ? playerRoom.GetComponentInParent<DungeonGenerator>() : null;
+            if (playerRoom == null || dungeon == null)
+            {
+                Jotunn.Logger.LogWarning($"Hardship: Could not find the current crypt room for player at {playerPos}; skipping Surtling Core processing.");
+                return;
+            }
+
+            var rooms = dungeon.GetComponentsInChildren<Room>(true);
+
             var stands = UnityEngine.Object.FindObjectsByType<Pickable>(FindObjectsSortMode.None)
                 .Where(p => p.gameObject.scene.IsValid()
                          && p.m_itemPrefab == surtlingCore.gameObject
-                         && Vector3.Distance(p.transform.position, playerPos) <= 80f)
+                         && rooms.Any(room => IsPositionInsideRoom(room, p.transform.position)))
+                .OrderBy(p => (p.transform.position - playerPos).sqrMagnitude)
                 .ToList();
+
+            Jotunn.Logger.LogDebug($"Hardship: Entered crypt room '{playerRoom.gameObject.name}' ({playerRoom.m_theme}); checking its {rooms.Length} rooms.");
+            Jotunn.Logger.LogDebug($"Hardship: Found {stands.Count} Surtling Core stand(s) in this crypt.");
+            foreach (var stand in stands)
+            {
+                float distance = Vector3.Distance(stand.transform.position, playerPos);
+                Jotunn.Logger.LogDebug($"Hardship: Core stand at {stand.transform.position}, {distance:F1}m away, processed={IsCoreStandProcessed(stand)}.");
+            }
 
             if (stands.Count == 0)
             {
                 return;
             }
 
+            if (stands.Any(IsCoreStandProcessed))
+            {
+                Jotunn.Logger.LogDebug("Hardship: A core stand was already processed; keeping the existing result.");
+                return;
+            }
+
             float roll = UnityEngine.Random.Range(0f, 100f);
-            float chance = cryptSurtlingCoreChance != null ? cryptSurtlingCoreChance.Value : 30f;
+            float chance = cryptSurtlingCoreChance != null ? cryptSurtlingCoreChance.Value : 50f;
             bool keepOne = roll < chance;
+
+            Jotunn.Logger.LogDebug($"Hardship: roll: {roll}");
+            if (keepOne)
+            {
+                Jotunn.Logger.LogDebug("Hardship: Keeping one Surtling Core stand in the crypt.");
+                MarkCoreStandProcessed(stands[0]);
+            }
+            else
+            {
+                Jotunn.Logger.LogDebug("Hardship: Not keeping any Surtling Core stands in the crypt.");
+            }
 
             // Keep only the first stand if roll succeeded; otherwise destroy all
             var toRemove = keepOne ? stands.Skip(1) : stands;
@@ -969,6 +1009,40 @@ public class Hardship : BaseUnityPlugin
                 {
                     UnityEngine.Object.Destroy(target);
                 }
+            }
+        }
+
+        private static bool IsPositionInsideRoom(Room room, Vector3 position)
+        {
+            var localPosition = room.transform.InverseTransformPoint(position);
+            const float boundaryTolerance = 0.5f;
+            return Mathf.Abs(localPosition.x) <= room.m_size.x * 0.5f + boundaryTolerance
+                && Mathf.Abs(localPosition.y) <= room.m_size.y * 0.5f + boundaryTolerance
+                && Mathf.Abs(localPosition.z) <= room.m_size.z * 0.5f + boundaryTolerance;
+        }
+
+        private static bool IsCoreStandProcessed(Pickable stand)
+        {
+            if (stand == null)
+            {
+                return false;
+            }
+
+            var networkView = stand.GetComponent<ZNetView>();
+            return (networkView != null
+                    && networkView.IsValid()
+                    && networkView.GetZDO().GetBool(ProcessedCoreStandZdoKey, false))
+                || processedStandInstanceIds.Contains(stand.GetInstanceID());
+        }
+
+        private static void MarkCoreStandProcessed(Pickable stand)
+        {
+            processedStandInstanceIds.Add(stand.GetInstanceID());
+
+            var networkView = stand.GetComponent<ZNetView>();
+            if (networkView != null && networkView.IsValid())
+            {
+                networkView.GetZDO().Set(ProcessedCoreStandZdoKey, true);
             }
         }
     }

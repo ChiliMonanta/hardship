@@ -10,7 +10,7 @@ your resources carefully, and prepare for storms before they find you exposed.
 ## Features
 - **Copper Ore Weight:** Configure the weight of copper ore on the server.
 - **Surtling Core Weight:** Configure the weight of Surtling Cores on the server (defaults to 150 kg).
-- **Crypt Surtling Core Scarcity:** Burial Chambers contain at most 1 Surtling Core (configurable spawn chance, defaults to 30%).
+- **Crypt Surtling Core Scarcity:** Burial Chambers contain at most 1 Surtling Core (configurable spawn chance, defaults to 50%, rolled once per crypt and limited to that crypt's rooms).
 - **Custom Death Penalty:** Skills below level 50 use percentage-based loss;
 	skills from level 50 use fixed reductions, with a smaller reduction at level
 	60 and above.

@@ -1,5 +1,7 @@
 ## v0.0.DEV
 
+- Fix, Restrict Surtling Core processing to the current crypt's generated rooms.
+- Fix, Prevent re-entering a Burial Chamber from rerolling its Surtling Core chance.
 - Remove recipes requiring Curious or Mysterious Axe Heads to keep Birch, Oak, and Ancient Trees behind later progression.
 
 ## v0.0.9

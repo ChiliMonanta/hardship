@@ -17,7 +17,7 @@ Download and follow releases on [Thunderstore](https://thunderstore.io/c/valheim
 
 - **Copper Ore Weight:** Configurable copper ore weight on the server (default `50`).
 - **Surtling Core Weight:** Configurable Surtling Core weight on the server (default `150`).
-- **Crypt Surtling Core Scarcity:** Burial Chambers contain 0 or 1 Surtling Core total based on a configurable chance (default `30%`).
+- **Crypt Surtling Core Scarcity:** Burial Chambers contain 0 or 1 Surtling Core total based on a configurable chance (default `50%`), rolled once per crypt and limited to that crypt's rooms.
 - **Custom Death Penalty:** Skill loss scaled by level.
 - **Dark Crypts & Caves:** Forced darkness indoors with tuned handheld lighting.
 - **Storm Ship Damage:** Ships take blunt damage while wind force reaches the configured storm threshold, but are protected in shallow water so they do not take damage while close to shore.
