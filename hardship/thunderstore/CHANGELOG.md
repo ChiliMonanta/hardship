@@ -1,3 +1,9 @@
+## v0.0.DEV
+
+- **Surtling Drops:** Surtlings no longer drop Surtling Cores.
+- **Geyser Cores:** Each geyser attempts to spawn a Surtling Core after a random 120-720 minutes, only when no core is already nearby.
+- **Geyser Gas:** Configure eruption intervals, cloud duration and radius, and stamina drain.
+
 ## v0.0.10
 
 - Fix, Restrict Surtling Core processing to the current crypt's generated rooms.

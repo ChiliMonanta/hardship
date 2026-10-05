@@ -17,6 +17,9 @@ Download and follow releases on [Thunderstore](https://thunderstore.io/c/valheim
 
 - **Copper Ore Weight:** Configurable copper ore weight on the server (default `50`).
 - **Surtling Core Weight:** Configurable Surtling Core weight on the server (default `150`).
+- **Surtling Drops:** Surtlings no longer drop Surtling Cores.
+- **Geyser Cores:** Each geyser attempts to spawn a Surtling Core after a random 120-720 minutes, only when no core is already nearby.
+- **Geyser Gas:** Geysers release a visible toxic cloud at random intervals of 4-55 seconds. Clouds last 15 seconds and affect players within 18 m; they drain 25 stamina per second, then deal drowning-type damage of 5% max health (rounded up) per second once stamina is exhausted. Gas intervals, cloud duration and radius, and stamina drain are configurable under `Geyser Gas`.
 - **Crypt Surtling Core Scarcity:** Burial Chambers contain 0 or 1 Surtling Core total based on a configurable chance (default `50%`), rolled once per crypt and limited to that crypt's rooms.
 - **Custom Death Penalty:** Skill loss scaled by level.
 - **Dark Crypts & Caves:** Forced darkness indoors with tuned handheld lighting.
@@ -35,6 +38,7 @@ BepInEx/config/com.valheim.hardship.cfg
 ```
 
 - `Storm Ship Damage -> ShallowWaterDepth`: storms do not damage ships when the seabed is close below them; this protects boats in shallow water and near shore.
+- `Geyser Gas -> MinimumIntervalSeconds` (default `4`), `MaximumIntervalSeconds` (`55`), `CloudDuration` (`15`), `CloudRadius` (`18`), and `StaminaDrainPerSecond` (`25`): configure ambient geyser gas eruptions and their effects.
 - `Lightning Strikes -> Enabled`, `LandChancePercent` (default `0.5`), `ShipChancePercent` (default `1`), `CheckIntervalSeconds` (default `130`), `CooldownSeconds` (default `120`), `ThunderstormEnvironments`: control whether, how often, and how likely lightning strikes are, and the cooldown before a player can be struck again.
 - `Raid Loot -> BlockRaidDrops` (default `true`): controls whether raid-spawned creatures are prevented from dropping loot.
 - `Weapon Balance -> ClubDamage` (default `8`), `FlintKnifeDamage` (default `8`), `StoneAxeDamage` (default `9`), `FlintSpearDamage` (default `12`), and `CrudeBowDamage` (default `14`): control the base damage of the early-game weapons.
@@ -53,7 +57,7 @@ The runtime dependency chain is:
 ```text
 Hardship
 ├── BepInEx 5.4.23.5
-├── Jötunn 2.30.1
+├── Jötunn 2.30.2
 │   └── YamlDotNet and JotunnBuildTask dependencies
 ├── UnityEngine assemblies from the local Valheim installation
 └── Valheim assemblies from valheim_Data/Managed
@@ -211,7 +215,7 @@ The Thunderstore package metadata is maintained in
 `hardship/thunderstore/manifest.json`. Its declared dependencies are:
 
 - `denikson-BepInExPack_Valheim-5.4.2350`
-- `ValheimModding-Jotunn-2.30.1`
+- `ValheimModding-Jotunn-2.30.2`
 
 For end users, BepInEx must already be installed in the Valheim directory.
 Install the release package with a mod manager, or extract `Hardship.zip` and

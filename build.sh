@@ -269,7 +269,7 @@ clean_build_files "$JONTUNN_PATH"
 # Jontunn has a prebuild step that requires the Mono.Cecil.dll, don't use the checked in one.
 cp .locals-packages/Mono.Cecil.dll $DEPS_PATH/Jotunn/libraries
 
-# The pinned v2.30.1 source still declares its BepInEx runtime version as 2.29.2.
+# The pinned v2.30.2 source still declares its BepInEx runtime version as 2.29.2.
 # Synchronize it with the version used for the assembly and distribution package.
 sed -i -E 's/(public const string Version = ")[^"]+/\1'"$JOTUNN_VERSION"'/' \
   "$JONTUNN_PATH/JotunnLib/Main.cs"

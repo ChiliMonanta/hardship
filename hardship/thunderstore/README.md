@@ -10,6 +10,9 @@ your resources carefully, and prepare for storms before they find you exposed.
 ## Features
 - **Copper Ore Weight:** Configure the weight of copper ore on the server.
 - **Surtling Core Weight:** Configure the weight of Surtling Cores on the server (defaults to 150 kg).
+- **Surtling Drops:** Surtlings no longer drop Surtling Cores.
+- **Geyser Cores:** Each geyser attempts to spawn a Surtling Core after a random 120-720 minutes, only when no core is already nearby.
+- **Geyser Gas:** Geysers release visible toxic clouds every 4-55 seconds. Clouds last 15 seconds, affect players within 18 m, and drain 25 stamina per second before dealing drowning-type damage. These gas settings are configurable.
 - **Crypt Surtling Core Scarcity:** Burial Chambers contain at most 1 Surtling Core (configurable spawn chance, defaults to 50%, rolled once per crypt and limited to that crypt's rooms).
 - **Custom Death Penalty:** Skills below level 50 use percentage-based loss;
 	skills from level 50 use fixed reductions, with a smaller reduction at level
