@@ -1,4 +1,4 @@
-## v0.0.DEV
+## v0.0.11
 
 - **Surtling Drops:** Surtlings no longer drop Surtling Cores.
 - **Geyser Cores:** Each geyser attempts to spawn a Surtling Core after a random 120-720 minutes, only when no core is already nearby.
