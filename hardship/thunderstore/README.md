@@ -17,9 +17,9 @@ your resources carefully, and prepare for storms before they find you exposed.
 - **Custom Death Penalty:** Skills below level 50 use percentage-based loss;
 	skills from level 50 use fixed reductions, with a smaller reduction at level
 	60 and above.
-- **Dark Crypts and Caves:** Ambient lighting, environmental light, fog, and
-	dungeon light sources are disabled indoors, making handheld lighting
-	necessary for exploration.
+- **Dark Crypts and Caves:** Crypts, Sunken Crypts, and caves have their ambient
+	lighting, environmental light, fog, and dungeon light sources disabled,
+	making handheld lighting necessary for exploration.
 - **Enhanced Handheld Lights:** Player torches and Dvergr lanterns have adjusted
 	light intensity and range while inside dark interiors.
 - **Lighting Note:** Camera zoom can affect the perceived brightness and range

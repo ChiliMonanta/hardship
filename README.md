@@ -22,7 +22,7 @@ Download and follow releases on [Thunderstore](https://thunderstore.io/c/valheim
 - **Geyser Gas:** Geysers release a visible toxic cloud at random intervals of 4-55 seconds. Clouds last 15 seconds and affect players within 18 m; they drain 25 stamina per second, then deal drowning-type damage of 5% max health (rounded up) per second once stamina is exhausted. Gas intervals, cloud duration and radius, and stamina drain are configurable under `Geyser Gas`.
 - **Crypt Surtling Core Scarcity:** Burial Chambers contain 0 or 1 Surtling Core total based on a configurable chance (default `50%`), rolled once per crypt and limited to that crypt's rooms.
 - **Custom Death Penalty:** Skill loss scaled by level.
-- **Dark Crypts & Caves:** Forced darkness indoors with tuned handheld lighting.
+- **Dark Crypts & Caves:** Crypts, Sunken Crypts, and caves are darkened with tuned handheld lighting.
 - **Storm Ship Damage:** Ships take blunt damage while wind force reaches the configured storm threshold, but are protected in shallow water so they do not take damage while close to shore.
 - **Lightning Strikes:** Players out in the open during a thunderstorm risk being struck by lightning (higher chance on a ship than on land); a struck player's health drops to 10, with a visible bolt and messages, followed by a per-player cooldown.
 - **Raid Loot Suppression:** Creatures spawned by raids do not drop loot by default, while ordinary creatures continue to drop loot normally.

@@ -2515,7 +2515,7 @@ public class Hardship : BaseUnityPlugin
 
             var playerPos = Player.m_localPlayer.transform.position;
             var playerRoom = UnityEngine.Object.FindObjectsByType<Room>(FindObjectsSortMode.None)
-                .Where(room => room.gameObject.scene.IsValid() && IsPositionInsideRoom(room, playerPos))
+                .Where(room => room.gameObject.scene.IsValid() && DungeonRoomUtils.IsPositionInsideRoom(room, playerPos))
                 .OrderBy(room => (room.transform.position - playerPos).sqrMagnitude)
                 .FirstOrDefault();
 
@@ -2531,7 +2531,7 @@ public class Hardship : BaseUnityPlugin
             var stands = UnityEngine.Object.FindObjectsByType<Pickable>(FindObjectsSortMode.None)
                 .Where(p => p.gameObject.scene.IsValid()
                          && p.m_itemPrefab == surtlingCore.gameObject
-                         && rooms.Any(room => IsPositionInsideRoom(room, p.transform.position)))
+                         && rooms.Any(room => DungeonRoomUtils.IsPositionInsideRoom(room, p.transform.position)))
                 .OrderBy(p => (p.transform.position - playerPos).sqrMagnitude)
                 .ToList();
 
@@ -2585,15 +2585,6 @@ public class Hardship : BaseUnityPlugin
             }
         }
 
-        private static bool IsPositionInsideRoom(Room room, Vector3 position)
-        {
-            var localPosition = room.transform.InverseTransformPoint(position);
-            const float boundaryTolerance = 0.5f;
-            return Mathf.Abs(localPosition.x) <= room.m_size.x * 0.5f + boundaryTolerance
-                && Mathf.Abs(localPosition.y) <= room.m_size.y * 0.5f + boundaryTolerance
-                && Mathf.Abs(localPosition.z) <= room.m_size.z * 0.5f + boundaryTolerance;
-        }
-
         private static bool IsCoreStandProcessed(Pickable stand)
         {
             if (stand == null)
@@ -2621,6 +2612,77 @@ public class Hardship : BaseUnityPlugin
     }
 
     #endregion
+
+    internal static class DungeonRoomUtils
+    {
+        private static readonly HashSet<Room> sunkenCryptRooms = new();
+        private static bool sunkenCryptRoomsInitialized;
+
+        public static bool IsPositionInsideRoom(Room room, Vector3 position)
+        {
+            var localPosition = room.transform.InverseTransformPoint(position);
+            const float boundaryTolerance = 0.5f;
+            return Mathf.Abs(localPosition.x) <= room.m_size.x * 0.5f + boundaryTolerance
+                && Mathf.Abs(localPosition.y) <= room.m_size.y * 0.5f + boundaryTolerance
+                && Mathf.Abs(localPosition.z) <= room.m_size.z * 0.5f + boundaryTolerance;
+        }
+
+        public static bool IsPositionInsideSunkenCrypt(Vector3 position)
+        {
+            if (!sunkenCryptRoomsInitialized)
+            {
+                foreach (var room in UnityEngine.Object.FindObjectsByType<Room>(FindObjectsSortMode.None))
+                {
+                    RegisterSunkenCryptRoom(room);
+                }
+
+                sunkenCryptRoomsInitialized = true;
+            }
+
+            foreach (var room in sunkenCryptRooms)
+            {
+                if (room != null
+                    && room.gameObject.scene.IsValid()
+                    && IsPositionInsideRoom(room, position))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static void RegisterSunkenCryptRoom(Room room)
+        {
+            if (room != null && (room.m_theme & Room.Theme.SunkenCrypt) != 0)
+            {
+                sunkenCryptRooms.Add(room);
+            }
+        }
+
+        public static void UnregisterRoom(Room room)
+        {
+            sunkenCryptRooms.Remove(room);
+        }
+    }
+
+    [HarmonyPatch(typeof(Room), "Awake")]
+    public static class DungeonRoomAwakePatch
+    {
+        private static void Postfix(Room __instance)
+        {
+            DungeonRoomUtils.RegisterSunkenCryptRoom(__instance);
+        }
+    }
+
+    [HarmonyPatch(typeof(Room), "OnDestroy")]
+    public static class DungeonRoomDestroyPatch
+    {
+        private static void Prefix(Room __instance)
+        {
+            DungeonRoomUtils.UnregisterRoom(__instance);
+        }
+    }
 
     #region Death penalty
 
@@ -2698,17 +2760,26 @@ public class Hardship : BaseUnityPlugin
                 return;
             }
 
-            if (!Player.m_localPlayer.InInterior())
+            if (!Player.m_localPlayer.InInterior() && !IsInSunkenCrypt(Player.m_localPlayer))
             {
                 RestoreLighting();
                 return;
             }
 
+            bool enteringDarkDungeon = !IsDarkDungeon;
             IsDarkDungeon = true;
             ApplyEnvironmentDarkness(environmentManager.GetCurrentEnvironment());
             ApplyDarkness();
-            DungeonLightPatch.DisableDungeonLights();
-            PlayerLightPatch.BoostPlayerLights();
+            if (enteringDarkDungeon)
+            {
+                DungeonLightPatch.DisableDungeonLights();
+                PlayerLightPatch.BoostPlayerLights();
+            }
+        }
+
+        private static bool IsInSunkenCrypt(Player player)
+        {
+            return DungeonRoomUtils.IsPositionInsideSunkenCrypt(player.transform.position);
         }
 
         private static void ApplyEnvironmentDarkness(EnvSetup environment)
