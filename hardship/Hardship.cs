@@ -22,6 +22,14 @@ public class Hardship : BaseUnityPlugin
     public const string PluginName = "Hardship";
 
     private ConfigEntry<float> copperOreWeight;
+    private ConfigEntry<float> tinOreWeight;
+    private ConfigEntry<float> ironScrapWeight;
+    private ConfigEntry<float> silverOreWeight;
+    private ConfigEntry<float> copperScrapWeight;
+    private ConfigEntry<float> ironOreWeight;
+    private ConfigEntry<float> bronzeScrapWeight;
+    private ConfigEntry<float> blackMetalScrapWeight;
+    private ConfigEntry<float> flametalOreNewWeight;
     private ConfigEntry<float> surtlingCoreWeight;
     private ConfigEntry<float> stormWindThreshold;
     private ConfigEntry<float> stormShipDamagePerSecond;
@@ -70,6 +78,78 @@ public class Hardship : BaseUnityPlugin
             50f,
             new ConfigDescription(
                 "Weight of one copper ore.",
+                new AcceptableValueRange<float>(0.1f, 1000f),
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+        tinOreWeight = Config.Bind(
+            "Ore Weights",
+            "TinOre",
+            50f,
+            new ConfigDescription(
+                "Weight of one tin ore.",
+                new AcceptableValueRange<float>(0.1f, 1000f),
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+        ironScrapWeight = Config.Bind(
+            "Ore Weights",
+            "IronScrap",
+            50f,
+            new ConfigDescription(
+                "Weight of one iron scrap.",
+                new AcceptableValueRange<float>(0.1f, 1000f),
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+        silverOreWeight = Config.Bind(
+            "Ore Weights",
+            "SilverOre",
+            50f,
+            new ConfigDescription(
+                "Weight of one silver ore.",
+                new AcceptableValueRange<float>(0.1f, 1000f),
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+        copperScrapWeight = Config.Bind(
+            "Ore Weights",
+            "CopperScrap",
+            50f,
+            new ConfigDescription(
+                "Weight of one copper scrap.",
+                new AcceptableValueRange<float>(0.1f, 1000f),
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+        ironOreWeight = Config.Bind(
+            "Ore Weights",
+            "IronOre",
+            50f,
+            new ConfigDescription(
+                "Weight of one iron ore.",
+                new AcceptableValueRange<float>(0.1f, 1000f),
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+        bronzeScrapWeight = Config.Bind(
+            "Ore Weights",
+            "BronzeScrap",
+            50f,
+            new ConfigDescription(
+                "Weight of one bronze scrap.",
+                new AcceptableValueRange<float>(0.1f, 1000f),
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+        blackMetalScrapWeight = Config.Bind(
+            "Ore Weights",
+            "BlackMetalScrap",
+            50f,
+            new ConfigDescription(
+                "Weight of one black metal scrap.",
+                new AcceptableValueRange<float>(0.1f, 1000f),
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+        flametalOreNewWeight = Config.Bind(
+            "Ore Weights",
+            "FlametalOreNew",
+            50f,
+            new ConfigDescription(
+                "Weight of one flametal ore.",
                 new AcceptableValueRange<float>(0.1f, 1000f),
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
@@ -368,6 +448,14 @@ public class Hardship : BaseUnityPlugin
     private void LogConfiguration()
     {
         Logger.LogInfo($"Copper ore weight set to {copperOreWeight.Value}.");
+        Logger.LogInfo($"Tin ore weight set to {tinOreWeight.Value}.");
+        Logger.LogInfo($"Iron scrap weight set to {ironScrapWeight.Value}.");
+        Logger.LogInfo($"Silver ore weight set to {silverOreWeight.Value}.");
+        Logger.LogInfo($"Copper scrap weight set to {copperScrapWeight.Value}.");
+        Logger.LogInfo($"Iron ore weight set to {ironOreWeight.Value}.");
+        Logger.LogInfo($"Bronze scrap weight set to {bronzeScrapWeight.Value}.");
+        Logger.LogInfo($"Black metal scrap weight set to {blackMetalScrapWeight.Value}.");
+        Logger.LogInfo($"Flametal ore weight set to {flametalOreNewWeight.Value}.");
         Logger.LogInfo($"Surtling core weight set to {surtlingCoreWeight.Value}.");
         Logger.LogInfo($"Crypt Surtling Core chance set to {cryptSurtlingCoreChance.Value}%.");
         Logger.LogInfo($"Storm ship damage enabled set to {StormShipDamageEnabled.Value}.");
@@ -397,14 +485,15 @@ public class Hardship : BaseUnityPlugin
     {
         RemoveEarlyAxeRecipes();
 
-        var copperOre = PrefabManager.Cache.GetPrefab<ItemDrop>("CopperOre");
-        if (copperOre == null)
-        {
-            Logger.LogError("Could not find the CopperOre prefab.");
-            return;
-        }
-
-        copperOre.m_itemData.m_shared.m_weight = copperOreWeight.Value;
+        SetItemWeight("CopperOre", copperOreWeight);
+        SetItemWeight("TinOre", tinOreWeight);
+        SetItemWeight("IronScrap", ironScrapWeight);
+        SetItemWeight("SilverOre", silverOreWeight);
+        SetItemWeight("CopperScrap", copperScrapWeight);
+        SetItemWeight("IronOre", ironOreWeight);
+        SetItemWeight("BronzeScrap", bronzeScrapWeight);
+        SetItemWeight("BlackMetalScrap", blackMetalScrapWeight);
+        SetItemWeight("FlametalOreNew", flametalOreNewWeight);
 
         var surtlingCore = PrefabManager.Cache.GetPrefab<ItemDrop>("SurtlingCore");
         if (surtlingCore == null)
@@ -415,6 +504,18 @@ public class Hardship : BaseUnityPlugin
 
         surtlingCore.m_itemData.m_shared.m_weight = surtlingCoreWeight.Value;
         SetWeaponBalance();
+    }
+
+    private void SetItemWeight(string prefabName, ConfigEntry<float> weight)
+    {
+        var item = PrefabManager.Cache.GetPrefab<ItemDrop>(prefabName);
+        if (item == null)
+        {
+            Logger.LogError($"Could not find the {prefabName} prefab.");
+            return;
+        }
+
+        item.m_itemData.m_shared.m_weight = weight.Value;
     }
 
     private void RemoveEarlyAxeRecipes()

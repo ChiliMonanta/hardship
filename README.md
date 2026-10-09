@@ -15,7 +15,7 @@ Download and follow releases on [Thunderstore](https://thunderstore.io/c/valheim
 
 ## Current Features
 
-- **Copper Ore Weight:** Configurable copper ore weight on the server (default `50`).
+- **Ore Weights:** Copper Ore, Tin Ore, Iron Scrap, Silver Ore, Copper Scrap, Iron Ore, Bronze Scrap, Black Metal Scrap, and Flametal Ore each have configurable server weights (default `50` each).
 - **Surtling Core Weight:** Configurable Surtling Core weight on the server (default `150`).
 - **Surtling Drops:** Surtlings no longer drop Surtling Cores.
 - **Geyser Cores:** Each geyser attempts to spawn a Surtling Core after a random 120-720 minutes, only when no core is already nearby.
@@ -37,6 +37,7 @@ The generated BepInEx configuration can be adjusted in:
 BepInEx/config/com.valheim.hardship.cfg
 ```
 
+- `Ore Weights -> CopperOre`, `TinOre`, `IronScrap`, `SilverOre`, `CopperScrap`, `IronOre`, `BronzeScrap`, `BlackMetalScrap`, and `FlametalOreNew`: each accepts `0.1` to `1000` (default `50`).
 - `Storm Ship Damage -> ShallowWaterDepth`: storms do not damage ships when the seabed is close below them; this protects boats in shallow water and near shore.
 - `Geyser Gas -> MinimumIntervalSeconds` (default `4`), `MaximumIntervalSeconds` (`55`), `CloudDuration` (`15`), `CloudRadius` (`18`), and `StaminaDrainPerSecond` (`25`): configure ambient geyser gas eruptions and their effects.
 - `Lightning Strikes -> Enabled`, `LandChancePercent` (default `0.5`), `ShipChancePercent` (default `1`), `CheckIntervalSeconds` (default `130`), `CooldownSeconds` (default `120`), `ThunderstormEnvironments`: control whether, how often, and how likely lightning strikes are, and the cooldown before a player can be struck again.

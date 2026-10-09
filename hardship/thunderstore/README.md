@@ -8,7 +8,7 @@ world itself against you. Explore dark crypts with a handheld light, manage
 your resources carefully, and prepare for storms before they find you exposed.
 
 ## Features
-- **Copper Ore Weight:** Configure the weight of copper ore on the server.
+- **Ore Weights:** Configure the weights of Copper Ore, Tin Ore, Iron Scrap, Silver Ore, Copper Scrap, Iron Ore, Bronze Scrap, Black Metal Scrap, and Flametal Ore on the server (default `50` each).
 - **Surtling Core Weight:** Configure the weight of Surtling Cores on the server (defaults to 150 kg).
 - **Surtling Drops:** Surtlings no longer drop Surtling Cores.
 - **Geyser Cores:** Each geyser attempts to spawn a Surtling Core after a random 120-720 minutes, only when no core is already nearby.
@@ -51,7 +51,7 @@ After launching the game once, edit the generated configuration file:
 BepInEx/config/com.valheim.Hardship.cfg
 ```
 
-- `Ore Weights -> CopperOre`: accepts `0.1` to `1000` (default `50`).
+- `Ore Weights -> CopperOre`, `TinOre`, `IronScrap`, `SilverOre`, `CopperScrap`, `IronOre`, `BronzeScrap`, `BlackMetalScrap`, and `FlametalOreNew`: each accepts `0.1` to `1000` (default `50`).
 - `Ore Weights -> SurtlingCore`: accepts `0.1` to `1000` (default `150`).
 - `Crypt Loot -> SurtlingCoreChance`: percent chance `0` to `100` (default `30`).
 - `Storm Ship Damage -> ShallowWaterDepth`: storms do not damage ships when the seabed is close below them; this protects boats in shallow water and near shore.

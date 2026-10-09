@@ -1,3 +1,7 @@
+## v0.0.DEV
+
+- **Ore Weights:** Added configurable weights for Tin Ore, Iron Scrap, Silver Ore, Copper Scrap, Iron Ore, Bronze Scrap, Black Metal Scrap, and Flametal Ore, matching the Copper Ore default.
+
 ## v0.0.11
 
 - **Surtling Drops:** Surtlings no longer drop Surtling Cores.
