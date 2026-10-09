@@ -2639,6 +2639,8 @@ public class Hardship : BaseUnityPlugin
                 sunkenCryptRoomsInitialized = true;
             }
 
+            sunkenCryptRooms.RemoveWhere(r => r == null);
+
             foreach (var room in sunkenCryptRooms)
             {
                 if (room != null
@@ -2660,10 +2662,6 @@ public class Hardship : BaseUnityPlugin
             }
         }
 
-        public static void UnregisterRoom(Room room)
-        {
-            sunkenCryptRooms.Remove(room);
-        }
     }
 
     [HarmonyPatch(typeof(Room), "Awake")]
@@ -2672,15 +2670,6 @@ public class Hardship : BaseUnityPlugin
         private static void Postfix(Room __instance)
         {
             DungeonRoomUtils.RegisterSunkenCryptRoom(__instance);
-        }
-    }
-
-    [HarmonyPatch(typeof(Room), "OnDestroy")]
-    public static class DungeonRoomDestroyPatch
-    {
-        private static void Prefix(Room __instance)
-        {
-            DungeonRoomUtils.UnregisterRoom(__instance);
         }
     }
 
