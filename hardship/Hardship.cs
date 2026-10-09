@@ -700,7 +700,7 @@ public class Hardship : BaseUnityPlugin
             var geyserPosition = __instance.transform.position;
             var modifierTransform = __instance.transform.Find(ModifierObjectName);
             bool shouldPlaceTarRing = modifierTransform != null;
-            Jotunn.Logger.LogInfo(
+            Jotunn.Logger.LogDebug(
                 $"Hardship: found geyser '{__instance.gameObject.name}' at {geyserPosition}; "
                 + $"terrain modifier exists={modifierTransform != null}, water layer mask={WaterLayerMask}.");
             bool hasSampledGround = TryGetGroundHeight(geyserPosition, out float sampledGroundHeight);
@@ -715,7 +715,7 @@ public class Hardship : BaseUnityPlugin
                     ConfigureTerrainModifier(existingModifier);
                     PokeTerrainHeightmaps(existingModifier);
                     shouldPlaceTarRing = true;
-                    Jotunn.Logger.LogInfo(
+                    Jotunn.Logger.LogDebug(
                         $"Hardship: updated existing geyser terrain modifier; "
                         + $"level radius={LevelRadius:F2}m, target offset={TerrainLoweringOffset:F2}m.");
                 }
@@ -741,7 +741,7 @@ public class Hardship : BaseUnityPlugin
                     modifierObject.SetActive(true);
                     plateGroundHeight = targetHeight;
                     shouldPlaceTarRing = true;
-                    Jotunn.Logger.LogInfo(
+                    Jotunn.Logger.LogDebug(
                         $"Hardship: raised terrain at {__instance.gameObject.name}; "
                         + $"radius={LevelRadius}m, target y={targetHeight:F2}, "
                         + $"lowered from y={unloweredTargetHeight:F2} by {TerrainLowering:F2}m, "
@@ -750,7 +750,7 @@ public class Hardship : BaseUnityPlugin
                 }
                 else
                 {
-                    Jotunn.Logger.LogInfo(
+                    Jotunn.Logger.LogDebug(
                         $"Hardship: did not raise terrain at '{__instance.gameObject.name}'; "
                         + $"water found={hasWater}, water y={(hasWater ? waterSurface.ToString("F2") : "<none>")}, "
                         + $"geyser y={geyserPosition.y:F2}.");
@@ -782,7 +782,7 @@ public class Hardship : BaseUnityPlugin
                 existingPlate.localScale = PlateScale;
                 var existingRenderer = existingPlate.GetComponent<MeshRenderer>();
                 var existingCollider = existingPlate.GetComponent<MeshCollider>();
-                Jotunn.Logger.LogInfo(
+                Jotunn.Logger.LogDebug(
                     $"Hardship: geyser plate already exists at {existingPlate.position}; "
                     + $"sampled ground y={(TryGetGroundHeight(geyserPosition, out float existingGround) ? existingGround.ToString("F2") : "<no heightmap>")}, "
                     + $"renderer bounds={FormatBounds(existingRenderer)}, "
@@ -823,7 +823,7 @@ public class Hardship : BaseUnityPlugin
 
             var plateRenderer = plate.GetComponent<MeshRenderer>();
             var plateCollider = plate.GetComponent<MeshCollider>();
-            Jotunn.Logger.LogInfo(
+            Jotunn.Logger.LogDebug(
                 $"Hardship: spawned geyser plate '{__instance.gameObject.name}'; "
                 + $"plate ground y={plateGroundHeight:F2}, sampled ground y={sampledGroundHeight:F2}, "
                 + $"outer radius={PlateMeshOuterRadius:F2}m, "
@@ -927,7 +927,7 @@ public class Hardship : BaseUnityPlugin
             var tarMesh = BuildTarPoolMesh();
             float tarSurfaceHeight = groundHeight + PlateTopHeight;
             tarEffect.Configure(groundHeight, tarSurfaceHeight, tarMesh);
-            Jotunn.Logger.LogInfo(
+            Jotunn.Logger.LogDebug(
                 $"Hardship: placed tar pool in geyser plate '{geyser.gameObject.name}'; "
                 + $"pool diameter={TarPoolRadius * 2f:F2}m, flow reaches radius={TarFlowRadius:F2}m, "
                 + $"bowl diameter={PlateScale.x * 0.8f:F2}m, bowl depth={PlateBowlDepth:F2}m, "
@@ -1085,7 +1085,7 @@ public class Hardship : BaseUnityPlugin
 
             tarRingPrefab.AddComponent<MeshRenderer>().sharedMaterial = material;
             tarRingPrefabInitialized = true;
-            Jotunn.Logger.LogInfo($"Hardship: created geyser tar ring material from '{sourceMaterial.name}'.");
+            Jotunn.Logger.LogDebug($"Hardship: created geyser tar ring material from '{sourceMaterial.name}'.");
             return tarRingPrefab;
         }
 
@@ -1336,7 +1336,7 @@ public class Hardship : BaseUnityPlugin
                     previousPosition.x,
                     plateGroundHeight - PlateBowlDepth,
                     previousPosition.z);
-                Jotunn.Logger.LogInfo(
+                Jotunn.Logger.LogDebug(
                     $"Hardship: positioned geyser particle effect '{effectTransform.name}' "
                     + $"at bowl floor y={effectTransform.position.y:F2} "
                     + $"(plate ground y={plateGroundHeight:F2}, depth={PlateBowlDepth:F2}m).");
@@ -1406,7 +1406,7 @@ public class Hardship : BaseUnityPlugin
 
                 nextCloudTime = now + GetRandomInterval();
                 worldCloudTimes[geyserPosition] = nextCloudTime;
-                Jotunn.Logger.LogInfo(
+                Jotunn.Logger.LogDebug(
                     $"Hardship: geyser at {geyserPosition} released a suffocating gas cloud; "
                     + $"next eruption in {nextCloudTime - now:F1} seconds.");
             }
@@ -1433,7 +1433,7 @@ public class Hardship : BaseUnityPlugin
                     GasCloudRpcName,
                     OnGasCloudRpc);
                 rpcRegistered = true;
-                Jotunn.Logger.LogInfo("Hardship: geyser gas RPC registered.");
+                Jotunn.Logger.LogDebug("Hardship: geyser gas RPC registered.");
             }
 
             private static void OnGasCloudRpc(long sender, Vector3 position, float radius, float duration)
@@ -1701,7 +1701,7 @@ public class Hardship : BaseUnityPlugin
                 {
                     nextSpawnTime = now + GetRandomSpawnInterval();
                     worldSpawnTimes.Add(geyserPosition, nextSpawnTime);
-                    Jotunn.Logger.LogInfo(
+                    Jotunn.Logger.LogDebug(
                         $"Hardship: geyser at {geyserPosition} will first spawn a Surtling Core "
                         + $"in {(nextSpawnTime - now) / 60d:F1} minutes.");
                     return;
@@ -1717,7 +1717,7 @@ public class Hardship : BaseUnityPlugin
                 {
                     if (!waitingForExistingCore)
                     {
-                        Jotunn.Logger.LogInfo(
+                        Jotunn.Logger.LogDebug(
                             $"Hardship: geyser at {geyserPosition} already has a Surtling Core; "
                             + "waiting for it to be collected before spawning another.");
                         waitingForExistingCore = true;
@@ -1754,7 +1754,7 @@ public class Hardship : BaseUnityPlugin
                 UnityEngine.Object.Instantiate(corePrefab, spawnPosition, Quaternion.identity);
                 nextSpawnTime = now + GetRandomSpawnInterval();
                 worldSpawnTimes[geyserPosition] = nextSpawnTime;
-                Jotunn.Logger.LogInfo(
+                Jotunn.Logger.LogDebug(
                     $"Hardship: spawned a Surtling Core at geyser {geyserPosition}; "
                     + $"next spawn attempt in {(nextSpawnTime - now) / 60d:F1} minutes.");
             }
@@ -1828,7 +1828,7 @@ public class Hardship : BaseUnityPlugin
             platePrefab.AddComponent<MeshRenderer>().sharedMaterial = material;
             platePrefab.AddComponent<MeshCollider>().sharedMesh = mesh;
             platePrefabInitialized = true;
-            Jotunn.Logger.LogInfo(
+            Jotunn.Logger.LogDebug(
                 $"Hardship: created geyser plate mesh; vertices={mesh.vertexCount}, "
                 + $"mesh bounds={mesh.bounds}, material='{sourceMaterial.name}', "
                 + $"shader='{sourceMaterial.shader.name}', scale={PlateScale}, "
@@ -1845,7 +1845,7 @@ public class Hardship : BaseUnityPlugin
             {
                 if (TryGetFirstMaterial(renderer, out material))
                 {
-                    Jotunn.Logger.LogInfo(
+                    Jotunn.Logger.LogDebug(
                         $"Hardship: using geyser material '{material.name}' "
                         + $"(shader '{material.shader.name}') for its base plate.");
                     return true;
@@ -1861,7 +1861,7 @@ public class Hardship : BaseUnityPlugin
 
                 if (TryGetFirstMaterial(renderer, out material))
                 {
-                    Jotunn.Logger.LogInfo(
+                    Jotunn.Logger.LogDebug(
                         $"Hardship: using scene material '{material.name}' "
                         + $"(shader '{material.shader.name}') for geyser plate.");
                     return true;
@@ -2254,7 +2254,7 @@ public class Hardship : BaseUnityPlugin
 
             ZRoutedRpc.instance.Register<Vector3, string>(RpcName, OnLightningStrikeRpc);
             rpcRegistered = true;
-            Jotunn.Logger.LogInfo("Hardship: lightning RPC registered.");
+            Jotunn.Logger.LogDebug("Hardship: lightning RPC registered.");
         }
 
         [HarmonyPostfix]
@@ -2324,7 +2324,7 @@ public class Hardship : BaseUnityPlugin
             player.Message(MessageHud.MessageType.Center, "Thor's wrath has struck you down!");
             player.StartCoroutine(ClearCenterMessageAfter(3f));
 
-            Jotunn.Logger.LogInfo($"Hardship: lightning struck {player.GetPlayerName()} at {player.transform.position}, sending RPC.");
+            Jotunn.Logger.LogDebug($"Hardship: lightning struck {player.GetPlayerName()} at {player.transform.position}, sending RPC.");
             ZRoutedRpc.instance.InvokeRoutedRPC(ZRoutedRpc.Everybody, RpcName, player.transform.position, player.GetPlayerName());
         }
 
@@ -2337,7 +2337,7 @@ public class Hardship : BaseUnityPlugin
 
         private static void OnLightningStrikeRpc(long sender, Vector3 position, string playerName)
         {
-            Jotunn.Logger.LogInfo($"Hardship: lightning RPC received for {playerName} at {position}.");
+            Jotunn.Logger.LogDebug($"Hardship: lightning RPC received for {playerName} at {position}.");
             SpawnLightningVisual(position);
 
             // The struck player already gets a center message locally; only notify everyone else.
