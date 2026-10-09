@@ -1,4 +1,4 @@
-## v0.0.DEV
+## v0.0.12
 
 - **Sunken Crypt Darkness:** Sunken Crypts are now darkened like other crypts and caves.
 - **Ore Weights:** Added configurable weights for Tin Ore, Iron Scrap, Silver Ore, Copper Scrap, Iron Ore, Bronze Scrap, Black Metal Scrap, and Flametal Ore, matching the Copper Ore default.
