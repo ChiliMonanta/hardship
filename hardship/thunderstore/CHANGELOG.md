@@ -1,3 +1,7 @@
+## v0.0.13
+
+- **Stability:** Fixed startup failure caused by a Harmony patch targeting the unavailable `Room.OnDestroy` method.
+
 ## v0.0.12
 
 - **Sunken Crypt Darkness:** Sunken Crypts are now darkened like other crypts and caves.
