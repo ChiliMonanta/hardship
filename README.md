@@ -23,7 +23,7 @@ Download and follow releases on [Thunderstore](https://thunderstore.io/c/valheim
 - **Crypt Surtling Core Scarcity:** Burial Chambers contain 0 or 1 Surtling Core total based on a configurable chance (default `50%`), rolled once per crypt and limited to that crypt's rooms.
 - **Custom Death Penalty:** Skill loss scaled by level.
 - **Dark Crypts & Caves:** Crypts, Sunken Crypts, and caves are darkened with tuned handheld lighting.
-- **Storm Ship Damage:** Ships take blunt damage while wind force reaches the configured storm threshold, but are protected in shallow water so they do not take damage while close to shore.
+- **Storm Ship Damage:** Ships take blunt damage only in configured storm environments and when wind reaches the configured threshold; shallow water protects ships from damage.
 - **Lightning Strikes:** Players out in the open during a thunderstorm risk being struck by lightning (higher chance on a ship than on land); a struck player's health drops to 10, with a visible bolt and messages, followed by a per-player cooldown.
 - **Raid Loot Suppression:** Creatures spawned by raids do not drop loot by default, while ordinary creatures continue to drop loot normally.
 - **Weapon Balance:** Club, Flint Knife, Stone Axe, Flint Spear, and Crude Bow damage can be adjusted at runtime through the `Weapon Balance` configuration section.
@@ -38,6 +38,7 @@ BepInEx/config/com.valheim.hardship.cfg
 ```
 
 - `Ore Weights -> CopperOre`, `TinOre`, `IronScrap`, `SilverOre`, `CopperScrap`, `IronOre`, `BronzeScrap`, `BlackMetalScrap`, and `FlametalOreNew`: each accepts `0.1` to `1000` (default `50`).
+- `Storm Ship Damage -> WeatherNames` (default `ThunderStorm`): comma-separated environment names in which wind can damage ships; other weather never triggers this damage. The existing wind, damage, and shallow-water settings still control its severity and where it applies.
 - `Storm Ship Damage -> ShallowWaterDepth`: storms do not damage ships when the seabed is close below them; this protects boats in shallow water and near shore.
 - `Geyser Gas -> MinimumIntervalSeconds` (default `4`), `MaximumIntervalSeconds` (`55`), `CloudDuration` (`15`), `CloudRadius` (`18`), and `StaminaDrainPerSecond` (`25`): configure ambient geyser gas eruptions and their effects.
 - `Lightning Strikes -> Enabled`, `LandChancePercent` (default `0.5`), `ShipChancePercent` (default `1`), `CheckIntervalSeconds` (default `130`), `CooldownSeconds` (default `120`), `ThunderstormEnvironments`: control whether, how often, and how likely lightning strikes are, and the cooldown before a player can be struck again.

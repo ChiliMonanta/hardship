@@ -31,7 +31,7 @@ your resources carefully, and prepare for storms before they find you exposed.
 	cooldown before it can happen again.
 - **Server Synchronization:** Configuration is synchronized to clients, and
 	every player must have the mod installed.
-- **Storm Ship Damage:** Ships take configurable damage during severe storms, but are protected in shallow water so they do not take damage while close to shore.
+- **Storm Ship Damage:** Ships take configurable damage only in configured storm environments and when wind reaches the configured threshold, but are protected in shallow water.
 - **Weapon Balance:** Early-game weapon damage can be adjusted at runtime through the configuration.
 - **Torch Recipe & Durability:** Torch crafting cost and the number of melee hits before it breaks can be adjusted at runtime through the configuration.
 - **Early Axe Progression:** Recipes requiring Curious or Mysterious Axe Heads are removed, keeping Birch, Oak, and Ancient Trees behind later progression.
@@ -54,6 +54,7 @@ BepInEx/config/com.valheim.Hardship.cfg
 - `Ore Weights -> CopperOre`, `TinOre`, `IronScrap`, `SilverOre`, `CopperScrap`, `IronOre`, `BronzeScrap`, `BlackMetalScrap`, and `FlametalOreNew`: each accepts `0.1` to `1000` (default `50`).
 - `Ore Weights -> SurtlingCore`: accepts `0.1` to `1000` (default `150`).
 - `Crypt Loot -> SurtlingCoreChance`: percent chance `0` to `100` (default `30`).
+- `Storm Ship Damage -> WeatherNames` (default `ThunderStorm`): comma-separated environment names in which wind can damage ships. Other weather never triggers this damage.
 - `Storm Ship Damage -> ShallowWaterDepth`: storms do not damage ships when the seabed is close below them; this protects boats in shallow water and near shore.
 - `Lightning Strikes -> Enabled`: toggles lightning strikes entirely (default `true`).
 - `Lightning Strikes -> LandChancePercent`: percent chance `0` to `100` per check while on land during a thunderstorm (default `0.5`).

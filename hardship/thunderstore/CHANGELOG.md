@@ -1,3 +1,7 @@
+## v0.0.DEV
+
+- **Storm Ship Damage:** Ships now take damage only in configured storm environments, not merely whenever wind is strong.
+
 ## v0.0.13
 
 - **Stability:** Fixed startup failure caused by a Harmony patch targeting the unavailable `Room.OnDestroy` method.

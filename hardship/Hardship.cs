@@ -48,6 +48,7 @@ public class Hardship : BaseUnityPlugin
     private ConfigEntry<bool> blockRaidDrops;
     internal static ConfigEntry<float> cryptSurtlingCoreChance;
     internal static ConfigEntry<bool> StormShipDamageEnabled;
+    internal static ConfigEntry<string> StormWeatherNames;
     internal static ConfigEntry<float> StormWindThreshold;
     internal static ConfigEntry<float> StormShipDamagePerSecond;
     internal static ConfigEntry<float> StormMaxDamageMultiplier;
@@ -258,6 +259,15 @@ public class Hardship : BaseUnityPlugin
             true,
             new ConfigDescription(
                 "Enable storm damage to ships.",
+                null,
+                new ConfigurationManagerAttributes { IsAdminOnly = true }));
+
+        StormWeatherNames = Config.Bind(
+            "Storm Ship Damage",
+            "WeatherNames",
+            "ThunderStorm",
+            new ConfigDescription(
+                "Comma-separated environment names in which storms can damage ships.",
                 null,
                 new ConfigurationManagerAttributes { IsAdminOnly = true }));
 
@@ -2140,6 +2150,7 @@ public class Hardship : BaseUnityPlugin
             if (__instance == null
                 || StormShipDamageEnabled == null
                 || !StormShipDamageEnabled.Value
+                || !IsStormWeather()
                 || StormShipDamagePerSecond == null
                 || StormShipDamagePerSecond.Value <= 0f
                 || EnvMan.instance == null)
@@ -2206,6 +2217,22 @@ public class Hardship : BaseUnityPlugin
                     StormShakeStrength.Value,
                     false);
             }
+        }
+
+        private static bool IsStormWeather()
+        {
+            var environment = EnvMan.instance?.GetCurrentEnvironment();
+            if (environment == null
+                || StormWeatherNames == null
+                || string.IsNullOrWhiteSpace(StormWeatherNames.Value))
+            {
+                return false;
+            }
+
+            return StormWeatherNames.Value
+                .Split(',')
+                .Select(name => name.Trim())
+                .Any(name => string.Equals(name, environment.m_name, StringComparison.OrdinalIgnoreCase));
         }
 
         private static bool IsInShallowWater(Ship ship)
