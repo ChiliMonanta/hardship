@@ -1,4 +1,4 @@
-## v0.0.DEV
+## v0.0.14
 
 - **Greydwarf Brute Drops:** Greydwarf Brutes no longer drop Ancient Seeds; Greydwarf Nests continue to drop them.
 - **Storm Ship Damage:** Damage now occurs only in configured storm environments; reduced defaults to 4 damage per second and a maximum 1.5x multiplier.
