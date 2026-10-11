@@ -55,6 +55,7 @@ BepInEx/config/com.valheim.Hardship.cfg
 - `Ore Weights -> SurtlingCore`: accepts `0.1` to `1000` (default `150`).
 - `Crypt Loot -> SurtlingCoreChance`: percent chance `0` to `100` (default `30`).
 - `Storm Ship Damage -> WeatherNames` (default `ThunderStorm`): comma-separated environment names in which wind can damage ships. Other weather never triggers this damage.
+- `Storm Ship Damage -> DamagePerSecond` (default `4`) and `MaxDamageMultiplier` (default `1.5`): ships take 4 blunt damage per second at the wind threshold, up to 6 per second at strongest wind.
 - `Storm Ship Damage -> ShallowWaterDepth`: storms do not damage ships when the seabed is close below them; this protects boats in shallow water and near shore.
 - `Lightning Strikes -> Enabled`: toggles lightning strikes entirely (default `true`).
 - `Lightning Strikes -> LandChancePercent`: percent chance `0` to `100` per check while on land during a thunderstorm (default `0.5`).

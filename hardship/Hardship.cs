@@ -274,7 +274,7 @@ public class Hardship : BaseUnityPlugin
         stormShipDamagePerSecond = Config.Bind(
             "Storm Ship Damage",
             "DamagePerSecond",
-            7f,
+            4f,
             new ConfigDescription(
                 "Blunt damage dealt to ships per second during storms.",
                 new AcceptableValueRange<float>(0f, 100f),
@@ -283,7 +283,7 @@ public class Hardship : BaseUnityPlugin
         stormMaxDamageMultiplier = Config.Bind(
             "Storm Ship Damage",
             "MaxDamageMultiplier",
-            2f,
+            1.5f,
             new ConfigDescription(
                 "Maximum damage multiplier at the strongest wind.",
                 new AcceptableValueRange<float>(1f, 10f),
