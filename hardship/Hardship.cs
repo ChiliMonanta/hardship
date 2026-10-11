@@ -2125,14 +2125,21 @@ public class Hardship : BaseUnityPlugin
             CharacterDrop __instance,
             ref List<KeyValuePair<GameObject, int>> __result)
         {
-            if (__instance == null
-                || !__instance.gameObject.name.StartsWith("Surtling", StringComparison.Ordinal)
-                || __result == null)
+            if (__instance == null || __result == null)
             {
                 return;
             }
 
-            __result.RemoveAll(drop => drop.Key != null && drop.Key.name == "SurtlingCore");
+            string creatureName = __instance.gameObject.name;
+            if (creatureName.StartsWith("Greydwarf_Elite", StringComparison.Ordinal))
+            {
+                __result.RemoveAll(drop => drop.Key != null && drop.Key.name == "AncientSeed");
+            }
+
+            if (creatureName.StartsWith("Surtling", StringComparison.Ordinal))
+            {
+                __result.RemoveAll(drop => drop.Key != null && drop.Key.name == "SurtlingCore");
+            }
         }
     }
 

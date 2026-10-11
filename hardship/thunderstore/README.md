@@ -24,6 +24,8 @@ your resources carefully, and prepare for storms before they find you exposed.
 	light intensity and range while inside dark interiors.
 - **Lighting Note:** Camera zoom can affect the perceived brightness and range
 	of handheld lights because Valheim adjusts light detail based on distance.
+- **Greydwarf Brute Drops:** Greydwarf Brutes no longer drop Ancient Seeds;
+	Greydwarf Nests continue to drop them.
 - **Lightning Strikes:** During thunderstorms, players out in the open (not
 	under a roof) risk being struck by lightning, with a higher chance while on
 	a ship. A struck player's health drops to 10, with a screen message and a
