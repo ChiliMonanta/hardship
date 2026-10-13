@@ -1,3 +1,7 @@
+## v0.0.DEV
+
+- **Greydwarf Nest Drops:** Greydwarf Nests now have a 40% chance to drop an Ancient Seed (previously a guaranteed drop).
+
 ## v0.0.14
 
 - **Greydwarf Brute Drops:** Greydwarf Brutes no longer drop Ancient Seeds; Greydwarf Nests continue to drop them.

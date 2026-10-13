@@ -18,7 +18,7 @@ Download and follow releases on [Thunderstore](https://thunderstore.io/c/valheim
 - **Ore Weights:** Copper Ore, Tin Ore, Iron Scrap, Silver Ore, Copper Scrap, Iron Ore, Bronze Scrap, Black Metal Scrap, and Flametal Ore each have configurable server weights (default `50` each).
 - **Surtling Core Weight:** Configurable Surtling Core weight on the server (default `150`).
 - **Surtling Drops:** Surtlings no longer drop Surtling Cores.
-- **Greydwarf Brute Drops:** Greydwarf Brutes no longer drop Ancient Seeds; Greydwarf Nests continue to drop them.
+- **Greydwarf Brute Drops:** Greydwarf Brutes no longer drop Ancient Seeds; Greydwarf Nests have a 40% chance to drop an Ancient Seed when destroyed (replaces the vanilla drop).
 - **Geyser Cores:** Each geyser attempts to spawn a Surtling Core after a random 120-720 minutes, only when no core is already nearby.
 - **Geyser Gas:** Geysers release a visible toxic cloud at random intervals of 4-55 seconds. Clouds last 15 seconds and affect players within 18 m; they drain 25 stamina per second, then deal drowning-type damage of 5% max health (rounded up) per second once stamina is exhausted. Gas intervals, cloud duration and radius, and stamina drain are configurable under `Geyser Gas`.
 - **Crypt Surtling Core Scarcity:** Burial Chambers contain 0 or 1 Surtling Core total based on a configurable chance (default `50%`), rolled once per crypt and limited to that crypt's rooms.

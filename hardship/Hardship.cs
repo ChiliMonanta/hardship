@@ -2145,6 +2145,72 @@ public class Hardship : BaseUnityPlugin
 
     #endregion
 
+    #region Greydwarf nest drops
+
+    [HarmonyPatch(typeof(DropOnDestroyed), "Awake")]
+    public static class GreydwarfNestVanillaDropPatch
+    {
+        private static void Prefix(DropOnDestroyed __instance)
+        {
+            if (__instance != null
+                && GreydwarfNestDropPatch.IsNest(__instance))
+            {
+                int removed = __instance.m_dropWhenDestroyed.m_drops.RemoveAll(
+                    drop => drop.m_item != null && drop.m_item.name == "AncientSeed");
+                Jotunn.Logger.LogDebug(
+                    $"Greydwarf nest '{__instance.gameObject.name}' initialised; removed {removed} vanilla AncientSeed drop(s), {__instance.m_dropWhenDestroyed.m_drops.Count} other drop(s) remain.");
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(DropOnDestroyed), "OnDestroyed")]
+    public static class GreydwarfNestDropPatch
+    {
+        private const float AncientSeedChancePercent = 40f;
+
+        internal static bool IsNest(DropOnDestroyed instance)
+        {
+            return instance != null
+                && instance.gameObject.name.StartsWith("Spawner_GreydwarfNest", StringComparison.Ordinal);
+        }
+
+        private static void Postfix(DropOnDestroyed __instance)
+        {
+            if (!IsNest(__instance) || ZNetScene.instance == null)
+            {
+                return;
+            }
+
+            float roll = UnityEngine.Random.Range(0f, 100f);
+            bool success = roll < AncientSeedChancePercent;
+            Jotunn.Logger.LogDebug(
+                $"Greydwarf nest destroyed: Ancient Seed roll {roll:F1} (needs < {AncientSeedChancePercent:F0}) -> {(success ? "drop" : "no drop")}.");
+            if (!success)
+            {
+                return;
+            }
+
+            var prefab = ZNetScene.instance.GetPrefab("AncientSeed");
+            if (prefab == null)
+            {
+                Jotunn.Logger.LogWarning("AncientSeed prefab not found; nest drop skipped.");
+                return;
+            }
+
+            var position = __instance.transform.position + Vector3.up * __instance.m_spawnYOffset;
+            var networkView = __instance.GetComponent<ZNetView>();
+            bool cheated = networkView != null
+                && networkView.IsValid()
+                && networkView.GetZDO().GetBool(ZDOVars.s_cheated)
+                && !PlayerProfile.s_bypassCheatChecks;
+            ItemDrop.OnCreateNew(
+                UnityEngine.Object.Instantiate(prefab, position, Quaternion.identity),
+                cheated);
+        }
+    }
+
+    #endregion
+
     #region Storm ship damage
 
     [HarmonyPatch(typeof(Ship), "CustomFixedUpdate")]
