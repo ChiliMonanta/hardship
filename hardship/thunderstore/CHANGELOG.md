@@ -1,4 +1,4 @@
-## v0.0.DEV
+## v0.0.15
 
 - **Greydwarf Nest Drops:** Greydwarf Nests now have a 40% chance to drop an Ancient Seed (previously a guaranteed drop).
 
