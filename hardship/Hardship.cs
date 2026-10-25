@@ -2211,6 +2211,57 @@ public class Hardship : BaseUnityPlugin
 
     #endregion
 
+    #region Kiln Surtling Core cost
+
+    [HarmonyPatch(typeof(Piece), nameof(Piece.DropResources))]
+    public static class KilnSurtlingCoreCostPatch
+    {
+        private static bool Prefix(Piece __instance)
+        {
+            if (!IsSurtlingCoreConsumingKiln(__instance))
+            {
+                return true;
+            }
+
+            if (__instance.m_resources == null)
+            {
+                return true;
+            }
+
+            foreach (var requirement in __instance.m_resources)
+            {
+                if (requirement?.m_resItem != null
+                    && Utils.GetPrefabName(requirement.m_resItem.name) == "SurtlingCore")
+                {
+                    requirement.m_recover = false;
+                }
+            }
+
+            return true;
+        }
+
+        private static bool IsSurtlingCoreConsumingKiln(Piece piece)
+        {
+            if (piece == null)
+            {
+                return false;
+            }
+
+            string prefabName = Utils.GetPrefabName(piece.gameObject.name);
+            return prefabName == "smelter"
+                || prefabName == "charcoal_kiln"
+                || prefabName == "blastfurnace"
+                || prefabName == "piece_smelter"
+                || prefabName == "piece_charcoal_kiln"
+                || prefabName == "piece_blastfurnace"
+                || piece.m_name == "$piece_smelter"
+                || piece.m_name == "$piece_charcoal_kiln"
+                || piece.m_name == "$piece_blastfurnace";
+        }
+    }
+
+    #endregion
+
     #region Storm ship damage
 
     [HarmonyPatch(typeof(Ship), "CustomFixedUpdate")]

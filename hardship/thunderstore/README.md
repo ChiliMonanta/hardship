@@ -11,6 +11,7 @@ your resources carefully, and prepare for storms before they find you exposed.
 - **Ore Weights:** Configure the weights of Copper Ore, Tin Ore, Iron Scrap, Silver Ore, Copper Scrap, Iron Ore, Bronze Scrap, Black Metal Scrap, and Flametal Ore on the server (default `50` each).
 - **Surtling Core Weight:** Configure the weight of Surtling Cores on the server (defaults to 150 kg).
 - **Surtling Drops:** Surtlings no longer drop Surtling Cores.
+- **Smelter, Charcoal Kiln, and Blast Furnace:** Their Surtling Core construction costs are unchanged, but cores are not returned when these structures are demolished or destroyed.
 - **Geyser Cores:** Each geyser attempts to spawn a Surtling Core after a random 120-720 minutes, only when no core is already nearby.
 - **Geyser Gas:** Geysers release visible toxic clouds every 4-55 seconds. Clouds last 15 seconds, affect players within 18 m, and drain 25 stamina per second before dealing drowning-type damage. These gas settings are configurable.
 - **Crypt Surtling Core Scarcity:** Burial Chambers contain at most 1 Surtling Core (configurable spawn chance, defaults to 50%, rolled once per crypt and limited to that crypt's rooms).

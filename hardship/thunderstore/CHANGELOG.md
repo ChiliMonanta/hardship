@@ -1,3 +1,7 @@
+## v0.0.DEV
+
+- Smelters, Charcoal Kilns, and Blast Furnaces no longer return Surtling Cores when demolished or destroyed; their construction costs are unchanged.
+
 ## v0.0.15
 
 - **Greydwarf Nest Drops:** Greydwarf Nests now have a 40% chance to drop an Ancient Seed (previously a guaranteed drop).
