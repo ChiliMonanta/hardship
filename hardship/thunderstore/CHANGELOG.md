@@ -1,4 +1,4 @@
-## v0.0.DEV
+## v0.0.16
 
 - Smelters, Charcoal Kilns, and Blast Furnaces no longer return Surtling Cores when demolished or destroyed; their construction costs are unchanged.
 
